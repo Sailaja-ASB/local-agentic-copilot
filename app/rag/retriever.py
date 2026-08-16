@@ -1,5 +1,5 @@
 from pathlib import Path  # Lets Python work with file and folder paths.
-
+import ollama
 import chromadb  # Local vector database used to store and search embeddings.
 from sentence_transformers import SentenceTransformer  # Converts text into numerical embeddings.
 
@@ -70,8 +70,35 @@ results = collection.query(
 
 # ---------- SHOW RESULT ----------
 
-print("\nQUESTION:")  # Print a label so our terminal output is easy to read.
-print(question)  # Show the question we searched for.
+context = results["documents"][0][0]  # Take the most relevant retrieved chunk and use it as evidence for the LLM.
 
-print("\nRETRIEVED DOCUMENT:")  # Print a label for the retrieved information.
-print(results["documents"][0][0])  # Display the document chunk Chroma considered most relevant.
+prompt = f"""
+Answer the user's question using only the context below.
+
+Context:
+{context}
+
+Question:
+{question}
+
+If the context does not contain enough information, say you do not know.
+"""  # Builds a grounded prompt so Qwen answers from retrieved evidence instead of guessing.
+
+response = ollama.chat(
+    model="qwen3:4b",  # Use the local Qwen3 4B model we already downloaded.
+    messages=[
+        {
+            "role": "user",
+            "content": prompt,
+        }
+    ],
+)  # Sends the grounded prompt to Qwen through the local Ollama service.
+
+print("\nQUESTION:")  # Label the question in our terminal output.
+print(question)  # Show the user's question.
+
+print("\nRETRIEVED CONTEXT:")  # Show exactly what RAG retrieved before generation.
+print(context)  # Print the evidence retrieved from ChromaDB.
+
+print("\nQWEN ANSWER:")  # Label the final generated response.
+print(response["message"]["content"])  # Print Qwen's answer generated from the retrieved context.
