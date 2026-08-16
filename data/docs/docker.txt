@@ -1,0 +1,1 @@
+Docker packages an application and its dependencies into containers so the application can run consistently across different environments.

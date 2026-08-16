@@ -1,0 +1,1 @@
+RAG combines information retrieval with language model generation. The retriever searches a knowledge base for relevant evidence before the LLM produces its answer.

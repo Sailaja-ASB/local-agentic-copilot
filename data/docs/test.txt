@@ -1,1 +1,0 @@
-Agentic AI systems use multiple specialized AI agents that collaborate to complete complex tasks. RAG retrieves relevant information from a knowledge base before generating an answer. Vector embeddings represent text numerically so semantically similar information can be retrieved. # Create safe sample knowledge that our RAG system will learn to retrieve
