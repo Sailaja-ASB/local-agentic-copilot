@@ -1,0 +1,26 @@
+[
+  {
+    "question": "What does RAG combine?",
+    "expected_source": "rag.txt"
+  },
+  {
+    "question": "What does a retriever search?",
+    "expected_source": "rag.txt"
+  },
+  {
+    "question": "What does Docker package?",
+    "expected_source": "docker.txt"
+  },
+  {
+    "question": "Why are containers useful across environments?",
+    "expected_source": "docker.txt"
+  },
+  {
+    "question": "What is FastAPI used for?",
+    "expected_source": "fastapi.txt"
+  },
+  {
+    "question": "Which framework supports asynchronous endpoints and automatic API documentation?",
+    "expected_source": "fastapi.txt"
+  }
+]
