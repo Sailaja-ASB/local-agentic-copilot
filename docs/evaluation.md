@@ -77,3 +77,68 @@ The correct source remained available within the Top 3 for every query, suggesti
 
 ### Next Hypothesis
 A second-stage reranker may improve Top-1 accuracy by comparing the query and candidate documents more directly.
+
+
+## Cross-Encoder Reranking Experiment
+
+### Method
+Dense retrieval first returns the Top-3 candidate chunks. A cross-encoder then scores each query-document pair and reranks the candidate set.
+
+### Results
+- Reranked Top-1 Accuracy: 7/8 = 87.5%
+- Reranked Hit@3: 8/8 = 100%
+
+### Comparison
+- Dense retrieval: 75% Top-1
+- Hybrid Dense + BM25: 75% Top-1
+- Dense + Cross-Encoder reranking: 87.5% Top-1
+
+### Interpretation
+Cross-encoder reranking improved Top-1 accuracy by 12.5 percentage points over the dense baseline.
+
+The candidate-generation stage maintained 100% Hit@3, while the reranker improved final ordering.
+
+One benchmark case remains incorrect and requires failure analysis before further tuning.
+
+
+### Remaining Failure Analysis
+
+Question:
+"Which retrieval approach may struggle with exact identifiers and uncommon technical terms?"
+
+Expected source:
+`vector_search.txt`
+
+Reranked result:
+1. `keyword_search.txt`
+2. `vector_search.txt`
+3. `hybrid_search.txt`
+
+Interpretation:
+The reranker appears to over-weight the lexical overlap around "exact identifiers" and "uncommon technical terms." Although `vector_search.txt` explicitly states that dense retrieval can struggle with these cases, `keyword_search.txt` describes those same concepts as strengths of lexical retrieval.
+
+This suggests the remaining error is caused by semantic overlap between documents rather than candidate-generation failure.
+
+
+## Metadata-Aware Reranking
+
+### Method
+Added source-topic metadata to each candidate before cross-encoder reranking.
+
+### Results
+- Reranked Top-1 Accuracy: 8/8 = 100%
+- Reranked Hit@3: 8/8 = 100%
+
+### Comparison
+- Dense retrieval: 75%
+- Hybrid Dense + BM25: 75%
+- Cross-Encoder reranking: 87.5%
+- Metadata-aware Cross-Encoder reranking: 100%
+
+### Interpretation
+The remaining failure was caused by semantic overlap between `vector_search.txt` and `keyword_search.txt`.
+
+Providing the reranker with explicit source-topic metadata improved disambiguation and corrected the final ranking without modifying the fixed evaluation benchmark.
+
+### Limitation
+This benchmark is still small and synthetic, so the 100% result should not be interpreted as production-level accuracy.
