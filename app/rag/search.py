@@ -49,7 +49,7 @@ def search_documents(question: str, top_k: int = 3) -> list[dict]:
 
 
 if __name__ == "__main__":
-    question = "What does RAG combine?"  # Temporary question for our first search-module test.
+    question = "What does page-aware ingestion preserve?"  # Tests whether retrieval finds the PDF chunk with page metadata.for our first search-module test.
 
     matches = search_documents(question, top_k=3)  # Retrieve the three best chunks.
 

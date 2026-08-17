@@ -1,46 +1,48 @@
 import ollama  # Lets our Python app call the local Qwen model through Ollama.
 
-from app.rag.search import search_documents  # Reuses our modular search layer to retrieve relevant evidence.
+from app.rag.search import search_documents  # Retrieves relevant evidence.
 
 
-MODEL_NAME = "qwen3:4b"  # Local LLM already installed in Ollama.
+MODEL_NAME = "qwen3:4b"  # Local LLM installed in Ollama.
 
-TOP_K = 3  # Number of retrieved chunks we will give to Qwen as context.
+TOP_K = 3  # Number of retrieved chunks given to Qwen.
 
 
 def build_context(matches: list[dict]) -> str:
     """Format retrieved chunks into grounded context with source citations."""
 
-    context_parts = []  # Stores each formatted evidence block.
+    context_parts = []
 
     for match in matches:
-        source = match["source"]  # Source filename for this chunk.
-
-        page = match["page"]  # PDF page number when available.
+        source = match["source"]
+        page = match["page"]
 
         citation = (
             f"{source}, page {page}"
             if page is not None
             else source
-        )  # Build a readable citation label.
+        )
 
         context_parts.append(
             f"[Source: {citation}]\n{match['text']}"
-        )  # Attach source metadata directly to the evidence.
+        )
 
-    return "\n\n".join(context_parts)  # Combine all retrieved evidence into one context string.
+    return "\n\n".join(context_parts)
 
 
 def answer_question(question: str) -> dict:
     """Retrieve evidence and generate a grounded local answer."""
 
+    # Step 1: Retrieve relevant document chunks.
     matches = search_documents(
         question,
         top_k=TOP_K,
-    )  # Retrieve the most relevant document chunks.
+    )
 
-    context = build_context(matches)  # Turn retrieved chunks into citation-aware context.
+    # Step 2: Build citation-aware context.
+    context = build_context(matches)
 
+    # Step 3: Create the grounded prompt.
     prompt = f"""
 You are a grounded technical assistant.
 
@@ -52,14 +54,16 @@ Rules:
    "I do not have enough information in the provided documents."
 3. Keep the answer concise and technically accurate.
 4. Cite the supporting source in the answer.
+5. Use the exact source name and page number shown in the context.
 
 Context:
 {context}
 
 Question:
 {question}
-"""  # Creates strict grounding instructions to reduce unsupported answers.
+"""
 
+    # Step 4: Send the question and retrieved context to local Qwen.
     response = ollama.chat(
         model=MODEL_NAME,
         messages=[
@@ -68,40 +72,64 @@ Question:
                 "content": prompt,
             }
         ],
-    )  # Sends the retrieved evidence and question to local Qwen.
+    )
 
-    answer = response["message"]["content"]  # Extract the generated answer text.
+    # Step 5: Extract Qwen's generated answer.
+    answer = response["message"]["content"]
 
-    sources = [
-        {
-            "source": match["source"],
-            "page": match["page"],
-        }
-        for match in matches
-    ]  # Keep structured citation metadata for future API/UI use.
+    # Step 6: Keep only sources that Qwen actually cited.
+    sources = []
 
+    for match in matches:
+        source = match["source"]
+        page = match["page"]
+
+        source_is_cited = source.lower() in answer.lower()
+
+        page_is_cited = (
+            page is None
+            or f"page {page}" in answer.lower()
+        )
+
+        if source_is_cited and page_is_cited:
+            source_record = {
+                "source": source,
+                "page": page,
+            }
+
+            # Avoid duplicate source entries.
+            if source_record not in sources:
+                sources.append(source_record)
+
+    # IMPORTANT:
+    # Return the structured result from the function.
     return {
         "question": question,
         "answer": answer,
         "sources": sources,
-    }  # Return structured output instead of only printing text.
+    }
 
 
 if __name__ == "__main__":
-    question = "What does RAG combine?"  # Temporary test question.
+    # Test PDF-grounded retrieval and citation.
+    question = "What does page-aware ingestion preserve?"
 
-    result = answer_question(question)  # Run retrieval + grounded Qwen generation.
+    result = answer_question(question)
 
     print("\nQUESTION:")
-    print(result["question"])  # Show the user's question.
+    print(result["question"])
 
     print("\nANSWER:")
-    print(result["answer"])  # Show Qwen's grounded response.
+    print(result["answer"])
 
     print("\nSOURCES:")
 
     for source in result["sources"]:
         if source["page"] is not None:
-            print(f"- {source['source']} — page {source['page']}")  # PDF citation.
+            print(
+                f"- {source['source']} — page {source['page']}"
+            )
         else:
-            print(f"- {source['source']}")  # TXT/Markdown citation.
+            print(
+                f"- {source['source']}"
+            )
