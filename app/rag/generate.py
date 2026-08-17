@@ -111,25 +111,38 @@ Question:
 
 
 if __name__ == "__main__":
-    # Test PDF-grounded retrieval and citation.
-    question = "What does page-aware ingestion preserve?"
+    print("\n=== Local Agentic Copilot ===")
+    print("Ask questions about your indexed documents.")
+    print("Type 'exit' to stop.\n")
 
-    result = answer_question(question)
+    while True:
+        question = input("Ask a question: ").strip()
 
-    print("\nQUESTION:")
-    print(result["question"])
+        if question.lower() in {"exit", "quit"}:
+            print("\nGoodbye!")
+            break
 
-    print("\nANSWER:")
-    print(result["answer"])
+        if not question:
+            continue
 
-    print("\nSOURCES:")
+        result = answer_question(question)
 
-    for source in result["sources"]:
-        if source["page"] is not None:
-            print(
-                f"- {source['source']} — page {source['page']}"
-            )
+        print("\nANSWER:")
+        print(result["answer"])
+
+        print("\nSOURCES:")
+
+        if result["sources"]:
+            for source in result["sources"]:
+                if source["page"] is not None:
+                    print(
+                        f"- {source['source']} — page {source['page']}"
+                    )
+                else:
+                    print(
+                        f"- {source['source']}"
+                    )
         else:
-            print(
-                f"- {source['source']}"
-            )
+            print("- No cited source")
+
+        print()
