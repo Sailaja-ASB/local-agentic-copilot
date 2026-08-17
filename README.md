@@ -173,6 +173,7 @@ This demonstrates deterministic validation combined with LLM-based semantic revi
 ---
 
 ## Architecture
+![Local Agentic Copilot V1 Architecture](docs/architecture.png)
 
 ```text
                      ┌─────────────────────┐
