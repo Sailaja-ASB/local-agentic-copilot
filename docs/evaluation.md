@@ -51,3 +51,29 @@ The correct source was still present within the Top 3 for every question.
 Dense semantic retrieval successfully finds relevant candidates but can struggle to rank highly overlapping documents correctly.
 
 Next experiments will test whether hybrid lexical + dense retrieval and reranking improve Top-1 accuracy while keeping the same fixed benchmark.
+
+## Hybrid Retrieval Experiment
+
+### Method
+Combined dense semantic retrieval and BM25 lexical retrieval using Reciprocal Rank Fusion.
+
+### Results
+- Hybrid Top-1 Accuracy: 6/8 = 75%
+- Hybrid Hit@3: 8/8 = 100%
+
+### Comparison
+Dense baseline:
+- Top-1: 75%
+- Hit@3: 100%
+
+Hybrid retrieval:
+- Top-1: 75%
+- Hit@3: 100%
+
+### Interpretation
+Adding BM25 with Reciprocal Rank Fusion did not improve Top-1 ranking on the current benchmark.
+
+The correct source remained available within the Top 3 for every query, suggesting that candidate generation is working well but final ranking remains the main weakness.
+
+### Next Hypothesis
+A second-stage reranker may improve Top-1 accuracy by comparing the query and candidate documents more directly.
