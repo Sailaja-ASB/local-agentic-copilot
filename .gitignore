@@ -1,2 +1,5 @@
 .venv/
 data/chroma_db/
+data/docs/*.pdf
+.DS_Store
+data/chroma_advanced/
