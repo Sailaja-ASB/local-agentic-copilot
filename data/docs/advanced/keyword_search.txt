@@ -1,0 +1,1 @@
+Keyword retrieval searches documents using lexical signals such as exact words and term frequency. BM25 is a commonly used ranking algorithm that considers term frequency, document frequency, and document length. Lexical retrieval is especially useful for exact identifiers, product names, error codes, API names, and uncommon technical terminology.

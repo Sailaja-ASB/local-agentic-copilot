@@ -1,0 +1,34 @@
+[
+  {
+    "question": "Which retrieval method can match concepts even when the query and document use different words?",
+    "expected_source": "vector_search.txt"
+  },
+  {
+    "question": "Which retrieval approach may struggle with exact identifiers and uncommon technical terms?",
+    "expected_source": "vector_search.txt"
+  },
+  {
+    "question": "Which ranking algorithm considers term frequency, document frequency, and document length?",
+    "expected_source": "keyword_search.txt"
+  },
+  {
+    "question": "Which retrieval method is particularly useful for error codes and exact API names?",
+    "expected_source": "keyword_search.txt"
+  },
+  {
+    "question": "How can semantic similarity and exact keyword matching be used together?",
+    "expected_source": "hybrid_search.txt"
+  },
+  {
+    "question": "Which retrieval strategy combines dense and lexical results before a later ranking stage?",
+    "expected_source": "hybrid_search.txt"
+  },
+  {
+    "question": "What happens after an initial retriever produces a candidate set?",
+    "expected_source": "reranking.txt"
+  },
+  {
+    "question": "Why can a more computationally expensive model be used during the second ranking stage?",
+    "expected_source": "reranking.txt"
+  }
+]

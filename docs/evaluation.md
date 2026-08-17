@@ -29,3 +29,25 @@ This is only an initial sanity-check benchmark using a small and simple dataset.
 - Add ambiguous questions.
 - Add paraphrased questions whose wording differs from the source text.
 - Compare baseline dense retrieval with improved retrieval methods such as hybrid search and reranking.
+
+## Advanced Dense Retrieval Baseline
+
+### Dataset
+- 4 overlapping technical documents
+- Topics: vector search, keyword/BM25 search, hybrid search, reranking
+- 8 evaluation questions
+- Questions were defined before observing retrieval results
+
+### Results
+- Top-1 Accuracy: 6/8 = 75%
+- Hit@3: 8/8 = 100%
+
+### Failure Analysis
+Two questions whose expected source was `vector_search.txt` were ranked below `hybrid_search.txt`.
+
+The correct source was still present within the Top 3 for every question.
+
+### Hypothesis
+Dense semantic retrieval successfully finds relevant candidates but can struggle to rank highly overlapping documents correctly.
+
+Next experiments will test whether hybrid lexical + dense retrieval and reranking improve Top-1 accuracy while keeping the same fixed benchmark.
