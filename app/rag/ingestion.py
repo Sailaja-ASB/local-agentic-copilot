@@ -7,33 +7,7 @@ SUPPORTED_EXTENSIONS = {".txt", ".md", ".pdf"}  # File types our ingestion pipel
 
 CHUNK_SIZE = 500  # Maximum number of characters in each chunk.
 
-CHUNK_OVERLAP = 100  # Repeats some text between chunks so important context is not cut off at boundaries.
-
-
-def read_document(file_path: Path) -> str:
-    """Read supported document types and return plain text."""
-
-    suffix = file_path.suffix.lower()  # Detect the file extension.
-
-    if suffix == ".txt":
-        return file_path.read_text(encoding="utf-8")  # Read plain text files.
-
-    if suffix == ".md":
-        return file_path.read_text(encoding="utf-8")  # Markdown is text, so we can read it directly.
-
-    if suffix == ".pdf":
-        reader = PdfReader(file_path)  # Open the PDF.
-
-        pages = [
-            page.extract_text() or ""
-            for page in reader.pages
-        ]  # Extract text from every PDF page.
-
-        return "\n".join(pages)  # Combine all page text into one document.
-
-    raise ValueError(
-        f"Unsupported file type: {suffix}"
-    )  # Stop cleanly if someone gives us an unsupported format.
+CHUNK_OVERLAP = 100  # Repeats some text between chunks so context is not cut off abruptly.
 
 
 def chunk_text(
@@ -44,49 +18,74 @@ def chunk_text(
     """Split text into overlapping chunks."""
 
     if not text.strip():
-        return []  # Do not create chunks from an empty document.
+        return []  # Ignore empty text.
 
-    chunks = []  # Stores all generated chunks.
+    chunks = []  # Stores the chunks we create.
 
-    start = 0  # Character position where the current chunk begins.
+    start = 0  # Starting character position.
 
     while start < len(text):
-        end = start + chunk_size  # Calculate where the current chunk should end.
+        end = start + chunk_size  # Calculate where the chunk should end.
 
-        chunk = text[start:end].strip()  # Extract and clean the current chunk.
+        chunk = text[start:end].strip()  # Extract and clean the chunk.
 
         if chunk:
-            chunks.append(chunk)  # Keep only non-empty chunks.
+            chunks.append(chunk)  # Keep non-empty chunks only.
 
-        start += chunk_size - overlap  # Move forward while preserving overlap with the previous chunk.
+        start += chunk_size - overlap  # Move forward while preserving overlap.
 
-    return chunks  # Return all generated chunks.
+    return chunks  # Return all chunks.
 
 
 def load_documents(directory: Path) -> list[dict]:
-    """Load and chunk every supported document in a directory."""
+    """Load and chunk supported documents while preserving source metadata."""
 
-    records = []  # Stores chunks plus metadata.
+    records = []  # Stores every chunk plus metadata.
 
     for file_path in sorted(directory.iterdir()):
         if not file_path.is_file():
             continue  # Ignore folders.
 
-        if file_path.suffix.lower() not in SUPPORTED_EXTENSIONS:
-            continue  # Ignore unsupported file types.
+        suffix = file_path.suffix.lower()  # Detect file type.
 
-        text = read_document(file_path)  # Extract readable text.
+        if suffix not in SUPPORTED_EXTENSIONS:
+            continue  # Ignore unsupported formats.
 
-        chunks = chunk_text(text)  # Split the document into overlapping pieces.
 
-        for index, chunk in enumerate(chunks):
-            records.append(
-                {
-                    "id": f"{file_path.stem}-chunk-{index}",
-                    "text": chunk,
-                    "source": file_path.name,
-                    "chunk_index": index,
-                }
-            )  # Save each chunk with traceable metadata.
+        if suffix in {".txt", ".md"}:
+            text = file_path.read_text(encoding="utf-8")  # Read text/Markdown normally.
 
-    return records  # Return everything ready for embedding/indexing.
+            chunks = chunk_text(text)  # Split into overlapping chunks.
+
+            for index, chunk in enumerate(chunks):
+                records.append(
+                    {
+                        "id": f"{file_path.stem}-chunk-{index}",
+                        "text": chunk,
+                        "source": file_path.name,
+                        "page": None,
+                        "chunk_index": index,
+                    }
+                )  # Save chunk metadata; TXT/MD files do not have page numbers.
+
+
+        elif suffix == ".pdf":
+            reader = PdfReader(file_path)  # Open the PDF.
+
+            for page_number, page in enumerate(reader.pages, start=1):
+                text = page.extract_text() or ""  # Extract text from this specific page.
+
+                chunks = chunk_text(text)  # Chunk one page at a time instead of flattening the whole PDF.
+
+                for index, chunk in enumerate(chunks):
+                    records.append(
+                        {
+                            "id": f"{file_path.stem}-page-{page_number}-chunk-{index}",
+                            "text": chunk,
+                            "source": file_path.name,
+                            "page": page_number,
+                            "chunk_index": index,
+                        }
+                    )  # Preserve the exact PDF page number for future citations.
+
+    return records  # Return all chunks ready for indexing.
