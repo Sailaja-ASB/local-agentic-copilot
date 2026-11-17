@@ -294,6 +294,26 @@ local-agentic-copilot/
 
 ---
 
+## Retrieval
+
+`app/rag/search.py` supports four modes, chosen with `RETRIEVAL_MODE`:
+
+| Mode | How it ranks | 47-question Top-1 |
+|---|---|---|
+| `dense` | MiniLM embeddings in ChromaDB | 91.5% |
+| `bm25` | BM25 keyword scoring | 91.5% |
+| `hybrid` (default) | Reciprocal Rank Fusion of dense + BM25 | 100% |
+| `hybrid_rerank` | hybrid, then a cross-encoder reranker | 100% (+~50 ms/query) |
+
+Dense and BM25 fail on different questions (dense misses exact identifiers, BM25 misses paraphrases), so fusing them fixes both. The reranker gave no extra accuracy on this benchmark, so it is off by default. Details: [eval/BENCHMARK.md](eval/BENCHMARK.md).
+
+```bash
+python eval/run_retrieval_eval.py      # compare methods in isolation
+python eval/eval_app_search.py         # run the benchmark through the app's real search code
+```
+
+---
+
 ## Installation
 
 Clone the repository:

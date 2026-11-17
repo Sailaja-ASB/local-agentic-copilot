@@ -13,3 +13,4 @@ data/chroma_documents/
 
 # Temporary indexing test data
 data/index_test/
+data/chroma_benchmark/

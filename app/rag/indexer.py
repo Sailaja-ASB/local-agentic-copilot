@@ -1,3 +1,4 @@
+import os  # Reads optional settings from environment variables.
 from pathlib import Path  # Lets us point to the document directory.
 
 import chromadb  # Stores our document chunks and embeddings.
@@ -6,17 +7,17 @@ from sentence_transformers import SentenceTransformer  # Generates semantic embe
 from app.rag.ingestion import load_documents  # Uses our tested TXT/MD/PDF ingestion pipeline.
 
 
-DOCS_DIR = Path("data/index_test")  # Small test dataset used to verify indexing before processing large PDFs.
-DB_PATH = "data/chroma_documents"  # Separate production-style document index.
+DOCS_DIR = Path(os.getenv("DOCS_DIR", "data/index_test"))  # Small test dataset used to verify indexing before processing large PDFs.
+DB_PATH = os.getenv("CHROMA_PATH", "data/chroma_documents")  # Separate production-style document index.
 
-COLLECTION_NAME = "knowledge_base"  # Name of our Chroma collection.
+COLLECTION_NAME = os.getenv("CHROMA_COLLECTION", "knowledge_base")  # Name of our Chroma collection.
 
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"  # Embedding model used for documents and future queries.
 
-def build_index():
+def build_index(docs_dir: Path = DOCS_DIR, db_path: str = DB_PATH, collection_name: str = COLLECTION_NAME):
     """Load documents, generate embeddings, and store them in Chroma."""
 
-    records = load_documents(DOCS_DIR)  # Read and chunk TXT, Markdown, and PDF documents.
+    records = load_documents(Path(docs_dir))  # Read and chunk TXT, Markdown, and PDF documents.
 
     if not records:
         raise ValueError("No document chunks found.")  # Prevent building an empty index.
@@ -49,15 +50,15 @@ def build_index():
         show_progress_bar=True,
     ).tolist()  # Generate embeddings for all document chunks.
 
-    client = chromadb.PersistentClient(path=DB_PATH)  # Open/create our persistent vector database.
+    client = chromadb.PersistentClient(path=db_path)  # Open/create our persistent vector database.
 
     try:
-        client.delete_collection(COLLECTION_NAME)
+        client.delete_collection(collection_name)
     except Exception:
         pass  # Remove an old version of this index when it exists.
 
     collection = client.create_collection(
-        name=COLLECTION_NAME
+        name=collection_name
     )  # Create a clean collection for the current document set.
 
     collection.add(
