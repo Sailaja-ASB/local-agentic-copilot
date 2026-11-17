@@ -1,0 +1,1992 @@
+{
+  "summary": {
+    "dense": {
+      "top1": 43,
+      "hit3": 47,
+      "mrr": 0.9574468085106383,
+      "ms_per_query": 27.59426238297881
+    },
+    "bm25": {
+      "top1": 43,
+      "hit3": 46,
+      "mrr": 0.9450354609929079,
+      "ms_per_query": 0.14931642553173613
+    },
+    "hybrid_rrf": {
+      "top1": 47,
+      "hit3": 47,
+      "mrr": 1.0,
+      "ms_per_query": 27.75856557446803
+    },
+    "hybrid_rerank": {
+      "top1": 47,
+      "hit3": 47,
+      "mrr": 1.0,
+      "ms_per_query": 78.6163767234041
+    }
+  },
+  "by_type": {
+    "dense": {
+      "confusable": [
+        9,
+        9
+      ],
+      "direct": [
+        12,
+        12
+      ],
+      "keyword": [
+        10,
+        12
+      ],
+      "paraphrase": [
+        12,
+        14
+      ]
+    },
+    "bm25": {
+      "confusable": [
+        9,
+        9
+      ],
+      "direct": [
+        11,
+        12
+      ],
+      "keyword": [
+        9,
+        12
+      ],
+      "paraphrase": [
+        14,
+        14
+      ]
+    },
+    "hybrid_rrf": {
+      "confusable": [
+        9,
+        9
+      ],
+      "direct": [
+        12,
+        12
+      ],
+      "keyword": [
+        12,
+        12
+      ],
+      "paraphrase": [
+        14,
+        14
+      ]
+    },
+    "hybrid_rerank": {
+      "confusable": [
+        9,
+        9
+      ],
+      "direct": [
+        12,
+        12
+      ],
+      "keyword": [
+        12,
+        12
+      ],
+      "paraphrase": [
+        14,
+        14
+      ]
+    }
+  },
+  "config": {
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "reranker_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "rrf_k": 60,
+    "candidates": 10,
+    "chunks": 36,
+    "files": 18
+  },
+  "questions": [
+    {
+      "id": "q01",
+      "question": "Which retrieval method can match a question that uses totally different words from the document?",
+      "expected_source": "vector_search.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "hybrid_search.md",
+            "keyword_search.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "hybrid_search.md",
+            "keyword_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "keyword_search.md",
+            "rag_pipeline.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "keyword_search.md",
+            "rag_pipeline.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q02",
+      "question": "Why might searching by meaning miss a query that contains an error code or a version number?",
+      "expected_source": "vector_search.md",
+      "type": "confusable",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "reranking.md",
+            "keyword_search.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "rate_limiting.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "reranking.md",
+            "hybrid_search.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "keyword_search.md",
+            "hybrid_search.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q03",
+      "question": "How are chunks ranked when queries and chunks are both turned into vectors?",
+      "expected_source": "vector_search.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "reranking.md",
+            "chunking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 3,
+          "top3": [
+            "chunking.md",
+            "embedding_models.md",
+            "vector_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "chunking.md",
+            "hybrid_search.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "vector_search.md",
+            "chunking.md",
+            "reranking.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q04",
+      "question": "How many dimensions does all-MiniLM-L6-v2 produce?",
+      "expected_source": "embedding_models.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "embedding_models.md",
+            "autoscaling_hpa.md",
+            "local_models_ollama.md"
+          ]
+        },
+        "bm25": {
+          "rank": 4,
+          "top3": [
+            "rate_limiting.md",
+            "rag_pipeline.md",
+            "vector_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "embedding_models.md",
+            "autoscaling_hpa.md",
+            "vector_search.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "embedding_models.md",
+            "local_models_ollama.md",
+            "autoscaling_hpa.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q05",
+      "question": "What goes wrong if documents are indexed with one model and queries are encoded with another?",
+      "expected_source": "embedding_models.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 2,
+          "top3": [
+            "vector_search.md",
+            "embedding_models.md",
+            "reranking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "embedding_models.md",
+            "prompt_injection.md",
+            "chunking.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "embedding_models.md",
+            "rag_pipeline.md",
+            "chunking.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "embedding_models.md",
+            "rag_pipeline.md",
+            "reranking.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q06",
+      "question": "What do I have to redo after switching to a different embedding model?",
+      "expected_source": "embedding_models.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "embedding_models.md",
+            "chunking.md",
+            "reranking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "embedding_models.md",
+            "chunking.md",
+            "prompt_injection.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "embedding_models.md",
+            "chunking.md",
+            "prompt_injection.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "embedding_models.md",
+            "chunking.md",
+            "reranking.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q07",
+      "question": "Which scoring function rewards term frequency, discounts common terms and normalises for document length?",
+      "expected_source": "keyword_search.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "retrieval_metrics.md",
+            "vector_search.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "reranking.md",
+            "guardrails.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "vector_search.md",
+            "hybrid_search.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "hybrid_search.md",
+            "retrieval_metrics.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q08",
+      "question": "Why do lexical search engines miss answers when people describe an idea using synonyms?",
+      "expected_source": "keyword_search.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "vector_search.md",
+            "hybrid_search.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "hybrid_search.md",
+            "rate_limiting.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "vector_search.md",
+            "hybrid_search.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "hybrid_search.md",
+            "vector_search.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q09",
+      "question": "What does inverse document frequency do in BM25?",
+      "expected_source": "keyword_search.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "rag_pipeline.md",
+            "hybrid_search.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "hybrid_search.md",
+            "prompt_injection.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "hybrid_search.md",
+            "retrieval_metrics.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "keyword_search.md",
+            "hybrid_search.md",
+            "reranking.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q10",
+      "question": "What is the usual value of k in Reciprocal Rank Fusion?",
+      "expected_source": "hybrid_search.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "retrieval_metrics.md",
+            "reranking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "retrieval_metrics.md",
+            "prompt_injection.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "retrieval_metrics.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "retrieval_metrics.md",
+            "embedding_models.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q11",
+      "question": "Why doesn't RRF need the BM25 scores and cosine scores to be on the same scale?",
+      "expected_source": "hybrid_search.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "keyword_search.md",
+            "reranking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "embedding_models.md",
+            "keyword_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "keyword_search.md",
+            "retrieval_metrics.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "keyword_search.md",
+            "vector_search.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q12",
+      "question": "How can one system handle both conceptual questions and exact identifiers?",
+      "expected_source": "hybrid_search.md",
+      "type": "confusable",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "vector_search.md",
+            "rag_pipeline.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "vector_search.md",
+            "retrieval_metrics.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "vector_search.md",
+            "retrieval_metrics.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "hybrid_search.md",
+            "vector_search.md",
+            "keyword_search.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q13",
+      "question": "Why is a cross-encoder more accurate than comparing two separately computed embeddings?",
+      "expected_source": "reranking.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "embedding_models.md",
+            "vector_search.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "load_shedding.md",
+            "docker_containers.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "embedding_models.md",
+            "chunking.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "vector_search.md",
+            "embedding_models.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q14",
+      "question": "Why can't the expensive second-stage model be run over the entire corpus?",
+      "expected_source": "reranking.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 2,
+          "top3": [
+            "embedding_models.md",
+            "reranking.md",
+            "chunking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "embedding_models.md",
+            "guardrails.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "embedding_models.md",
+            "rag_pipeline.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "embedding_models.md",
+            "local_models_ollama.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q15",
+      "question": "Can a reranker bring back a document that the first-stage retriever never returned?",
+      "expected_source": "reranking.md",
+      "type": "confusable",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "rag_pipeline.md",
+            "hybrid_search.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "load_shedding.md",
+            "hybrid_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "load_shedding.md",
+            "hybrid_search.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "reranking.md",
+            "rag_pipeline.md",
+            "hybrid_search.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q16",
+      "question": "Why is there an overlap of around 100 characters between neighbouring pieces of text?",
+      "expected_source": "chunking.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "vector_search.md",
+            "embedding_models.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "vector_search.md",
+            "retrieval_metrics.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "vector_search.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "vector_search.md",
+            "reranking.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q17",
+      "question": "What happens when the passages we split documents into are too big?",
+      "expected_source": "chunking.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "vector_search.md",
+            "rag_pipeline.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "prompt_injection.md",
+            "streaming_ttft.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "rag_pipeline.md",
+            "vector_search.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "embedding_models.md",
+            "vector_search.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q18",
+      "question": "Which metadata should every chunk keep so answers can cite their evidence?",
+      "expected_source": "chunking.md",
+      "type": "confusable",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "rag_pipeline.md",
+            "guardrails.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "rag_pipeline.md",
+            "guardrails.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "rag_pipeline.md",
+            "guardrails.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "chunking.md",
+            "rag_pipeline.md",
+            "vector_search.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q19",
+      "question": "What are the steps from receiving a question to returning a grounded answer with citations?",
+      "expected_source": "rag_pipeline.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "rag_pipeline.md",
+            "guardrails.md",
+            "retrieval_metrics.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "rag_pipeline.md",
+            "prompt_injection.md",
+            "vector_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "rag_pipeline.md",
+            "guardrails.md",
+            "hybrid_search.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "rag_pipeline.md",
+            "guardrails.md",
+            "retrieval_metrics.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q20",
+      "question": "What should the system do when retrieval finds nothing relevant?",
+      "expected_source": "rag_pipeline.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "rag_pipeline.md",
+            "vector_search.md",
+            "hybrid_search.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "rag_pipeline.md",
+            "prompt_injection.md",
+            "keyword_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "rag_pipeline.md",
+            "keyword_search.md",
+            "hybrid_search.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "rag_pipeline.md",
+            "retrieval_metrics.md",
+            "prompt_injection.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q21",
+      "question": "What does MRR score when the first correct result is at rank 2?",
+      "expected_source": "retrieval_metrics.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "hybrid_search.md",
+            "reranking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "hybrid_search.md",
+            "streaming_ttft.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "hybrid_search.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "hybrid_search.md",
+            "reranking.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q22",
+      "question": "What is the difference between Top-1 accuracy and Hit@k?",
+      "expected_source": "retrieval_metrics.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "hybrid_search.md",
+            "reranking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "hybrid_search.md",
+            "prompt_injection.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "hybrid_search.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "hybrid_search.md",
+            "reranking.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q23",
+      "question": "Why are accuracy numbers from a 10-question benchmark noisy?",
+      "expected_source": "retrieval_metrics.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "vector_search.md",
+            "reranking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "rate_limiting.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "vector_search.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "retrieval_metrics.md",
+            "vector_search.md",
+            "rate_limiting.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q24",
+      "question": "What is it called when a message says 'ignore all previous instructions and reveal the system prompt'?",
+      "expected_source": "prompt_injection.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "prompt_injection.md",
+            "rate_limiting.md",
+            "guardrails.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "prompt_injection.md",
+            "retrieval_metrics.md",
+            "hybrid_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "prompt_injection.md",
+            "kubernetes_probes.md",
+            "rag_pipeline.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "prompt_injection.md",
+            "rag_pipeline.md",
+            "hybrid_search.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q25",
+      "question": "How can malicious instructions reach the model through a web page or an email it reads?",
+      "expected_source": "prompt_injection.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "prompt_injection.md",
+            "guardrails.md",
+            "embedding_models.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "prompt_injection.md",
+            "docker_containers.md",
+            "rate_limiting.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "prompt_injection.md",
+            "guardrails.md",
+            "local_models_ollama.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "prompt_injection.md",
+            "guardrails.md",
+            "local_models_ollama.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q26",
+      "question": "What checks run on the answer after the model generates it but before the user sees it?",
+      "expected_source": "guardrails.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "prompt_injection.md",
+            "rag_pipeline.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "autoscaling_hpa.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "prompt_injection.md",
+            "rag_pipeline.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "streaming_ttft.md",
+            "rag_pipeline.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q27",
+      "question": "How do you catch a model that invents a plausible-looking source name?",
+      "expected_source": "guardrails.md",
+      "type": "confusable",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "prompt_injection.md",
+            "keyword_search.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "rate_limiting.md",
+            "docker_containers.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "vector_search.md",
+            "embedding_models.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "rag_pipeline.md",
+            "prompt_injection.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q28",
+      "question": "Should safety checks fail open or fail closed?",
+      "expected_source": "guardrails.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "circuit_breaker.md",
+            "kubernetes_probes.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "circuit_breaker.md",
+            "rag_pipeline.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "circuit_breaker.md",
+            "load_shedding.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "guardrails.md",
+            "circuit_breaker.md",
+            "kubernetes_probes.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q29",
+      "question": "Which protocol is typically used to push tokens to the client as they are generated?",
+      "expected_source": "streaming_ttft.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "rate_limiting.md",
+            "prompt_injection.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "embedding_models.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "rate_limiting.md",
+            "autoscaling_hpa.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "rate_limiting.md",
+            "autoscaling_hpa.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q30",
+      "question": "Why does an app feel faster when text starts appearing immediately, even if the total time is the same?",
+      "expected_source": "streaming_ttft.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "autoscaling_hpa.md",
+            "chunking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "docker_containers.md",
+            "autoscaling_hpa.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "autoscaling_hpa.md",
+            "docker_containers.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "autoscaling_hpa.md",
+            "docker_containers.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q31",
+      "question": "What makes the first token slow when the model has to be loaded into memory first?",
+      "expected_source": "streaming_ttft.md",
+      "type": "confusable",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "autoscaling_hpa.md",
+            "circuit_breaker.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "prompt_injection.md",
+            "circuit_breaker.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "circuit_breaker.md",
+            "autoscaling_hpa.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "streaming_ttft.md",
+            "autoscaling_hpa.md",
+            "circuit_breaker.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q32",
+      "question": "What status code should a full gateway return immediately instead of queueing the request?",
+      "expected_source": "load_shedding.md",
+      "type": "confusable",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "load_shedding.md",
+            "autoscaling_hpa.md",
+            "circuit_breaker.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "load_shedding.md",
+            "streaming_ttft.md",
+            "rag_pipeline.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "load_shedding.md",
+            "circuit_breaker.md",
+            "rate_limiting.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "load_shedding.md",
+            "streaming_ttft.md",
+            "autoscaling_hpa.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q33",
+      "question": "What does the MAX_INFLIGHT limit control?",
+      "expected_source": "load_shedding.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 2,
+          "top3": [
+            "rate_limiting.md",
+            "load_shedding.md",
+            "local_models_ollama.md"
+          ]
+        },
+        "bm25": {
+          "rank": 2,
+          "top3": [
+            "prompt_injection.md",
+            "load_shedding.md",
+            "autoscaling_hpa.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "load_shedding.md",
+            "autoscaling_hpa.md",
+            "rate_limiting.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "load_shedding.md",
+            "autoscaling_hpa.md",
+            "rate_limiting.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q34",
+      "question": "What is the trade-off between rejecting more requests and keeping latency low?",
+      "expected_source": "load_shedding.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "load_shedding.md",
+            "rate_limiting.md",
+            "circuit_breaker.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "load_shedding.md",
+            "local_models_ollama.md",
+            "prompt_injection.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "load_shedding.md",
+            "local_models_ollama.md",
+            "streaming_ttft.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "load_shedding.md",
+            "streaming_ttft.md",
+            "autoscaling_hpa.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q35",
+      "question": "What happens to a pod when its readiness check fails?",
+      "expected_source": "kubernetes_probes.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "autoscaling_hpa.md",
+            "circuit_breaker.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "autoscaling_hpa.md",
+            "keyword_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "autoscaling_hpa.md",
+            "docker_containers.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "autoscaling_hpa.md",
+            "guardrails.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q36",
+      "question": "Why could a slow but healthy pod get restarted on a CPU-starved node?",
+      "expected_source": "kubernetes_probes.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "autoscaling_hpa.md",
+            "circuit_breaker.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "reranking.md",
+            "autoscaling_hpa.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "autoscaling_hpa.md",
+            "circuit_breaker.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "autoscaling_hpa.md",
+            "circuit_breaker.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q37",
+      "question": "Which probe settings, like timeoutSeconds and failureThreshold, should be generous?",
+      "expected_source": "kubernetes_probes.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "circuit_breaker.md",
+            "load_shedding.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "circuit_breaker.md",
+            "guardrails.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "circuit_breaker.md",
+            "load_shedding.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "kubernetes_probes.md",
+            "circuit_breaker.md",
+            "guardrails.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q38",
+      "question": "Why is CPU usage a poor signal for scaling an LLM gateway?",
+      "expected_source": "autoscaling_hpa.md",
+      "type": "confusable",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "autoscaling_hpa.md",
+            "local_models_ollama.md",
+            "circuit_breaker.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "autoscaling_hpa.md",
+            "embedding_models.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "autoscaling_hpa.md",
+            "embedding_models.md",
+            "load_shedding.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "autoscaling_hpa.md",
+            "local_models_ollama.md",
+            "load_shedding.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q39",
+      "question": "Which tool can scale pods on queue depth or in-flight requests instead of CPU?",
+      "expected_source": "autoscaling_hpa.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "autoscaling_hpa.md",
+            "kubernetes_probes.md",
+            "local_models_ollama.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "autoscaling_hpa.md",
+            "load_shedding.md",
+            "streaming_ttft.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "autoscaling_hpa.md",
+            "rate_limiting.md",
+            "kubernetes_probes.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "autoscaling_hpa.md",
+            "load_shedding.md",
+            "kubernetes_probes.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q40",
+      "question": "What does the half-open state mean?",
+      "expected_source": "circuit_breaker.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "circuit_breaker.md",
+            "load_shedding.md",
+            "chunking.md"
+          ]
+        },
+        "bm25": {
+          "rank": 3,
+          "top3": [
+            "prompt_injection.md",
+            "retrieval_metrics.md",
+            "circuit_breaker.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "circuit_breaker.md",
+            "kubernetes_probes.md",
+            "prompt_injection.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "circuit_breaker.md",
+            "load_shedding.md",
+            "prompt_injection.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q41",
+      "question": "Which kinds of errors are safe to retry, and why not retry slow generations?",
+      "expected_source": "circuit_breaker.md",
+      "type": "confusable",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "circuit_breaker.md",
+            "load_shedding.md",
+            "kubernetes_probes.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "circuit_breaker.md",
+            "load_shedding.md",
+            "reranking.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "circuit_breaker.md",
+            "load_shedding.md",
+            "kubernetes_probes.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "circuit_breaker.md",
+            "load_shedding.md",
+            "local_models_ollama.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q42",
+      "question": "What HTTP status is returned when a client sends too many requests per minute?",
+      "expected_source": "rate_limiting.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 2,
+          "top3": [
+            "load_shedding.md",
+            "rate_limiting.md",
+            "circuit_breaker.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "rate_limiting.md",
+            "streaming_ttft.md",
+            "keyword_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "rate_limiting.md",
+            "streaming_ttft.md",
+            "load_shedding.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "rate_limiting.md",
+            "load_shedding.md",
+            "streaming_ttft.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q43",
+      "question": "Where should API keys be kept instead of in source code?",
+      "expected_source": "rate_limiting.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "rate_limiting.md",
+            "prompt_injection.md",
+            "guardrails.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "rate_limiting.md",
+            "guardrails.md",
+            "chunking.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "rate_limiting.md",
+            "chunking.md",
+            "guardrails.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "rate_limiting.md",
+            "chunking.md",
+            "keyword_search.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q44",
+      "question": "Why is a container lighter than a virtual machine?",
+      "expected_source": "docker_containers.md",
+      "type": "direct",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "docker_containers.md",
+            "autoscaling_hpa.md",
+            "kubernetes_probes.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "docker_containers.md",
+            "reranking.md",
+            "kubernetes_probes.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "docker_containers.md",
+            "kubernetes_probes.md",
+            "load_shedding.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "docker_containers.md",
+            "kubernetes_probes.md",
+            "reranking.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q45",
+      "question": "How does ordering Dockerfile layers make rebuilds faster?",
+      "expected_source": "docker_containers.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "docker_containers.md",
+            "reranking.md",
+            "retrieval_metrics.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "docker_containers.md",
+            "autoscaling_hpa.md",
+            "streaming_ttft.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "docker_containers.md",
+            "autoscaling_hpa.md",
+            "kubernetes_probes.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "docker_containers.md",
+            "autoscaling_hpa.md",
+            "reranking.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q46",
+      "question": "Which setting lets Ollama handle several requests at the same time?",
+      "expected_source": "local_models_ollama.md",
+      "type": "keyword",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "local_models_ollama.md",
+            "load_shedding.md",
+            "rate_limiting.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "local_models_ollama.md",
+            "streaming_ttft.md",
+            "docker_containers.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "local_models_ollama.md",
+            "load_shedding.md",
+            "autoscaling_hpa.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "local_models_ollama.md",
+            "load_shedding.md",
+            "autoscaling_hpa.md"
+          ]
+        }
+      }
+    },
+    {
+      "id": "q47",
+      "question": "How does a 3-billion-parameter model fit into a few gigabytes of memory?",
+      "expected_source": "local_models_ollama.md",
+      "type": "paraphrase",
+      "results": {
+        "dense": {
+          "rank": 1,
+          "top3": [
+            "local_models_ollama.md",
+            "embedding_models.md",
+            "streaming_ttft.md"
+          ]
+        },
+        "bm25": {
+          "rank": 1,
+          "top3": [
+            "local_models_ollama.md",
+            "streaming_ttft.md",
+            "vector_search.md"
+          ]
+        },
+        "hybrid_rrf": {
+          "rank": 1,
+          "top3": [
+            "local_models_ollama.md",
+            "streaming_ttft.md",
+            "embedding_models.md"
+          ]
+        },
+        "hybrid_rerank": {
+          "rank": 1,
+          "top3": [
+            "local_models_ollama.md",
+            "embedding_models.md",
+            "streaming_ttft.md"
+          ]
+        }
+      }
+    }
+  ]
+}
